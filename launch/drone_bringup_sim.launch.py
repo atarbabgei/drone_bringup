@@ -1,9 +1,16 @@
 from launch import LaunchDescription
-from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.actions import Node
 
 def generate_launch_description():
     return LaunchDescription([
+        # Execute the PX4 SITL build and run
+        ExecuteProcess(
+            cmd=['bash', '-c', 'cd ~/PX4-Autopilot && make px4_sitl gz_x500_spinning_guard'],
+            output='screen'
+        ),
+
         # Launch the micro_ros_agent
         ExecuteProcess(
             cmd=['ros2', 'run', 'micro_ros_agent', 'micro_ros_agent', 'udp4', '-p', '8888'],
