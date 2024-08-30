@@ -7,7 +7,7 @@ def generate_launch_description():
     return LaunchDescription([
         # Execute the PX4 SITL build and run
         ExecuteProcess(
-            cmd=['bash', '-c', 'cd ~/PX4-Autopilot && make px4_sitl gz_x500_spinning_guard'],
+            cmd=['bash', '-c', 'cd ~/Firmware-PX4/rolling_drone/PX4-Autopilot && make px4_sitl gz_x500_spinning_guard'],
             output='screen'
         ),
 
