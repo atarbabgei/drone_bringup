@@ -2,6 +2,8 @@ from launch import LaunchDescription
 from launch.actions import ExecuteProcess
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
+import os
 
 def generate_launch_description():
     return LaunchDescription([
@@ -32,7 +34,8 @@ def generate_launch_description():
         
         # Launch the px4_ros_visualizer
         ExecuteProcess(
-            cmd=['ros2', 'launch', 'px4_ros_visualizer', 'px4_visualizer.launch.py'],
+            cmd=['ros2', 'launch', 'px4_ros_visualizer', 'px4_visualizer.launch.py', 
+                f'rviz_config:={os.path.join(get_package_share_directory("px4_ros_visualizer"), "config", "px4_visualizer_config_with_contact.rviz")}'],
             output='screen'
         ),
     ])
