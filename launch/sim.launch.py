@@ -17,8 +17,15 @@ def generate_launch_description():
             cmd=['ros2', 'run', 'micro_ros_agent', 'micro_ros_agent', 'udp4', '-p', '8888'],
             output='screen'
         ),
+
+                # Launch the ros_gz_bridge for force/torque parameter bridge for the fixed joint / base
+        ExecuteProcess(
+            cmd=['ros2', 'run', 'ros_gz_bridge', 'parameter_bridge', 
+                 '/propeller_guard_fixed_joint/force_torque@geometry_msgs/msg/Wrench@gz.msgs.Wrench'],
+            output='screen'
+        ),
         
-        # Launch the ros_gz_bridge for force/torque parameter bridge
+        # Launch the ros_gz_bridge for force/torque parameter bridge for the rotating propeller guard joint
         ExecuteProcess(
             cmd=['ros2', 'run', 'ros_gz_bridge', 'parameter_bridge', 
                  '/propeller_guard_joint/force_torque@geometry_msgs/msg/Wrench@gz.msgs.Wrench'],
@@ -32,10 +39,4 @@ def generate_launch_description():
             output='screen'
         ),
         
-        # Launch the px4_ros_visualizer
-        ExecuteProcess(
-            cmd=['ros2', 'launch', 'px4_ros_visualizer', 'px4_visualizer.launch.py', 
-                f'rviz_config:={os.path.join(get_package_share_directory("px4_ros_visualizer"), "config", "px4_visualizer_config_with_contact.rviz")}'],
-            output='screen'
-        ),
     ])
